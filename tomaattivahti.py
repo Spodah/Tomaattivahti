@@ -26,10 +26,10 @@ def isfloat(value):
 
 def send_alert():
     return requests.post(
-            "https://api.mailgun.net/v3/sandboxd4b3c74cc0cd43c3af0c44891a743e61.mailgun.org/messages",
-            auth=("api", "key-64a1ddae467588fd957b9955876332c6"),
-            data={"from": "Tomaattivahti <postmaster@sandboxd4b3c74cc0cd43c3af0c44891a743e61.mailgun.org>",
-                    "to": ["juuso.puroila@myy.haaga-helia.fi"],
+            "https://api.mailgun.net/v3/<domain>/messages",
+            auth=("api", "<mailgun api-key>"),
+            data={"from": "Tomaattivahti <<sender>>",
+                    "to": ["<receiver>"],
                     "subject": "Alert",
                     "text": alertmessage})
             
@@ -38,7 +38,6 @@ ser = serial.Serial(port="/dev/ttyACM0", baudrate=115200, timeout=1)
 now = datetime.datetime.now()
 noon = now.replace(hour=8, minute=0, second=0, microsecond=0)
 pastnoon = now.replace(hour=16, minute=0, second=0, microsecond=0)
-#timetest = now.replace(hour=12, minute=30, second=0, microsecond=0)
 
 while True:
     s = serReadLine(ser)
@@ -71,10 +70,10 @@ while True:
                     alertmessage = alertmessage+ "Alert! Light broken "
                                     
             if alertmessage != "":
-                #r = send_alert()
+                #r = send_alert() #commented out for testing purposes
                 print (alertmessage)
             else:
-                print ("no alert " +s[0] + s[1] + s[2])
+                print ("no alert " +s[0] + s[1] + s[2] + s[3])
             print (s)
             break #the program stops after valid input has been processed, otherwise keeps trying again
         else:
