@@ -22,9 +22,9 @@ void setup() {
 
 void loop() {
   soilValue = analogRead(soilPin);
-  int chk = DHT.read11(DHT11_PIN);
+  int chk = DHT.read11(DHT11_PIN); //needed for DHT library to work
   lightValue = analogRead(sensorPin);
-  soilValue = int(0.7*soilValue + 0.3*soilpre);//liukuvat keskiarvot
+  soilValue = int(0.7*soilValue + 0.3*soilpre);//floating average
   soilpre = soilValue;
   hum = DHT.humidity;
   hum = 0.7*hum + 0.3*humpre;
